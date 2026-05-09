@@ -2,8 +2,19 @@ import React from 'react';
 import { View } from 'react-native';
 import { XStack, Button } from 'tamagui';
 import { Home, Users, Zap, Rocket, Settings } from 'lucide-react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import type { RootStackParamList } from '@/navigation/types';
+import { Paths } from '@/navigation/paths';
+
+type NavigationProp = StackNavigationProp<RootStackParamList>;
 
 export function BottomNavigation() {
+  const navigation = useNavigation<NavigationProp>();
+  const route = useRoute();
+  
+  const isHome = route.name === Paths.Home;
+  const isUsers = route.name === Paths.Users;
   return (
     <XStack 
       position="absolute" 
@@ -18,22 +29,28 @@ export function BottomNavigation() {
       borderRadius={40}
       borderWidth={1}
       borderColor="rgba(0,0,0,0.04)"
-      shadowColor="rgba(0,0,0,0.15)"
-      shadowOffset={{ width: 0, height: 12 }}
-      shadowOpacity={1}
-      shadowRadius={30}
-      elevation={15}
       zIndex={20}
     >
-      <Button unstyled animation="bouncy" pressStyle={{ scale: 0.9, opacity: 0.6 }} padding="$2">
-        <Home color="#6a1bf5" size={26} strokeWidth={2.5} />
+      <Button 
+        unstyled 
+        animation="bouncy" 
+        pressStyle={{ scale: 0.9, opacity: 0.6 }} 
+        padding="$2"
+        onPress={() => navigation.navigate(Paths.Home)}
+      >
+        <Home color={isHome ? "#6a1bf5" : "#a3a6bc"} size={26} strokeWidth={2.5} />
       </Button>
       
-      <Button unstyled animation="bouncy" pressStyle={{ scale: 0.9, opacity: 0.6 }} padding="$2">
-        <Users color="#a3a6bc" size={26} strokeWidth={2.5} />
+      <Button 
+        unstyled 
+        animation="bouncy" 
+        pressStyle={{ scale: 0.9, opacity: 0.6 }} 
+        padding="$2"
+        onPress={() => navigation.navigate(Paths.Users)}
+      >
+        <Users color={isUsers ? "#6a1bf5" : "#a3a6bc"} size={26} strokeWidth={2.5} />
       </Button>
       
-      {/* Center Action Button */}
       <View>
         <Button 
           unstyled
