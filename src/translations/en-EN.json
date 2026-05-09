@@ -1,0 +1,14 @@
+{
+  "boilerplate": {
+    "common_appName": {
+      "full": "React Native Boilerplate",
+      "initials": "RNB"
+    },
+    "common_error": "Oops! Something went wrong.",
+    "error_boundary": {
+      "title": "Oops! Something went wrong.",
+      "description": "We are sorry for the inconvenience. Please try again later.",
+      "cta": "Reload the screen"
+    }
+  }
+}
