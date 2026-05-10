@@ -16,6 +16,8 @@ export const instance = ky.extend({
         if (token) {
           request.headers.set('Authorization', `Bearer ${token}`);
         }
+        // Debug: log every API call
+        console.log(`[API] ${request.method} ${request.url}`);
       },
     ],
     afterResponse: [

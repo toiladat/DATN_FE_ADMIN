@@ -1,12 +1,15 @@
 import React, { useState, useMemo } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, TouchableWithoutFeedback } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 import { YStack, XStack, Text, Input, Button, Theme, Card, Spinner, Avatar } from 'tamagui';
-import { Search, MoreVertical, X } from 'lucide-react-native';
+import { Search, MoreVertical, X, User as UserIcon, Folder } from 'lucide-react-native';
+import { Paths } from '@/navigation/paths';
 
 import { BottomNavigation } from '@/components/dashboard/BottomNavigation';
 import { useUsers, User, UserStatus } from './useUsers';
 import { useDebounce } from '@/hooks/useDebounce';
+import { useRefresh } from '@/hooks/useRefresh';
 
 const FILTER_TABS = ['All', 'Blocked', 'Pending'];
 
@@ -25,8 +28,10 @@ function getStatusFromTab(tab: string): UserStatus | undefined {
 function Users() {
   const [activeTab, setActiveTab] = useState('All');
   const [searchValue, setSearchValue] = useState('');
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const debouncedSearch = useDebounce(searchValue, 500);
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation<any>();
 
   const status = getStatusFromTab(activeTab);
 
@@ -38,11 +43,18 @@ function Users() {
     isLoading,
     isError,
     error,
+    refetch,
   } = useUsers({
     limit: 10,
     keyword: debouncedSearch || undefined,
     status,
   });
+
+  const { refreshControl } = useRefresh({ refetch });
+
+  const handleToggleMenu = React.useCallback((userId: string) => {
+    setOpenMenuId(current => current === userId ? null : userId);
+  }, []);
 
   const users = useMemo(() => {
     return data?.pages.flatMap((page) => page.data) || [];
@@ -124,11 +136,13 @@ function Users() {
     return (
       <Card
         backgroundColor="white"
-        borderRadius={40}
+        borderRadius={20}
         borderWidth={1}
         borderColor="rgba(0,0,0,0.03)"
         padding="$4"
         marginBottom="$3"
+        overflow="visible"
+        zIndex={openMenuId === user.id ? 10 : 1}
       >
         <XStack alignItems="center" space="$4">
           <Avatar circular size="$5" backgroundColor="#f0effc" marginRight="$2">
@@ -161,10 +175,76 @@ function Users() {
             </Text>
           </YStack>
 
-          <YStack alignItems="flex-end" justifyContent="center" space="$2">
-            <Button unstyled padding="$1" borderRadius={100} pressStyle={{ backgroundColor: 'rgba(0,0,0,0.05)' }}>
+          <YStack alignItems="flex-end" justifyContent="center" space="$2" zIndex={10}>
+            <Button 
+              unstyled 
+              padding="$2" 
+              borderRadius={100} 
+              pressStyle={{ backgroundColor: 'rgba(0,0,0,0.05)' }}
+              onPress={() => handleToggleMenu(user.id)}
+            >
               <MoreVertical color="#717786" size={20} />
             </Button>
+
+            {openMenuId === user.id && (
+              <YStack
+                position="absolute"
+                top={35}
+                right={0}
+                backgroundColor="white"
+                padding="$1.5"
+                borderRadius={14}
+                borderWidth={1}
+                borderColor="rgba(0,0,0,0.04)"
+                shadowColor="#000"
+                shadowOffset={{ width: 0, height: 10 }}
+                shadowOpacity={0.08}
+                shadowRadius={24}
+                elevation={10}
+                minWidth={160}
+                zIndex={100}
+                animation="bouncy"
+                enterStyle={{ opacity: 0, scale: 0.95, y: -5 }}
+              >
+                <Button 
+                  unstyled 
+                  paddingVertical="$2.5" 
+                  paddingHorizontal="$3" 
+                  flexDirection="row" 
+                  alignItems="center" 
+                  justifyContent="flex-start"
+                  borderRadius={10}
+                  pressStyle={{ backgroundColor: '#f4f3f8' }}
+                  onPress={() => {
+                    setOpenMenuId(null);
+                    navigation.navigate(Paths.UserDetail, { id: user.id });
+                  }}
+                >
+                  <UserIcon color="#717786" size={16} strokeWidth={2.5} />
+                  <Text fontSize={14} fontWeight="600" color="#1a1b1f" marginLeft="$3">View Details</Text>
+                </Button>
+                
+                <YStack height={1} backgroundColor="rgba(0,0,0,0.04)" marginVertical="$1" marginHorizontal="$2" />
+
+                <Button 
+                  unstyled 
+                  paddingVertical="$2.5" 
+                  paddingHorizontal="$3" 
+                  flexDirection="row" 
+                  alignItems="center" 
+                  justifyContent="flex-start"
+                  borderRadius={10}
+                  pressStyle={{ backgroundColor: '#f4f3f8' }}
+                  onPress={() => {
+                    console.log('Projects', user.id);
+                    setOpenMenuId(null);
+                  }}
+                >
+                  <Folder color="#717786" size={16} strokeWidth={2.5} />
+                  <Text fontSize={14} fontWeight="600" color="#1a1b1f" marginLeft="$3">User Projects</Text>
+                </Button>
+              </YStack>
+            )}
           </YStack>
         </XStack>
       </Card>
@@ -206,9 +286,10 @@ function Users() {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <Theme name="light">
-        <YStack flex={1} backgroundColor="#f8f9fc">
+    <TouchableWithoutFeedback onPress={() => setOpenMenuId(null)}>
+      <View style={{ flex: 1 }}>
+        <Theme name="light">
+          <YStack flex={1} backgroundColor="#f8f9fc">
           
           <FlatList
             data={users}
@@ -222,6 +303,7 @@ function Users() {
             }}
             onEndReachedThreshold={0.5}
             showsVerticalScrollIndicator={false}
+            refreshControl={refreshControl}
             contentContainerStyle={{
               paddingHorizontal: 20,
               paddingTop: Math.max(insets.top, 16) + 16,
@@ -232,7 +314,8 @@ function Users() {
           <BottomNavigation />
         </YStack>
       </Theme>
-    </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 

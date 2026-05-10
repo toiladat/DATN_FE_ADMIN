@@ -8,6 +8,7 @@ import ApplicationNavigator from '@/navigation/Application';
 import { ThemeProvider } from '@/theme';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { TamaguiProvider } from 'tamagui';
+import { PortalProvider } from '@tamagui/portal';
 import tamaguiConfig from '../tamagui.config';
 import '@/translations';
 
@@ -26,16 +27,18 @@ export const storage = createMMKV();
 
 function App() {
   return (
-    <GestureHandlerRootView>
-      <QueryClientProvider client={queryClient}>
-        <TamaguiProvider config={tamaguiConfig} defaultTheme="dark">
-          <AuthProvider>
-            <ThemeProvider storage={storage}>
-              <ApplicationNavigator />
-            </ThemeProvider>
-          </AuthProvider>
-        </TamaguiProvider>
-      </QueryClientProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <PortalProvider shouldAddRootHost>
+        <QueryClientProvider client={queryClient}>
+          <TamaguiProvider config={tamaguiConfig} defaultTheme="dark">
+            <AuthProvider>
+              <ThemeProvider storage={storage}>
+                <ApplicationNavigator />
+              </ThemeProvider>
+            </AuthProvider>
+          </TamaguiProvider>
+        </QueryClientProvider>
+      </PortalProvider>
     </GestureHandlerRootView>
   );
 }
