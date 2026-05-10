@@ -1784,6 +1784,11 @@
   resolved "https://registry.npmjs.org/@pkgr/core/-/core-0.2.9.tgz"
   integrity sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA==
 
+"@react-native-clipboard/clipboard@^1.16.3":
+  version "1.16.3"
+  resolved "https://registry.yarnpkg.com/@react-native-clipboard/clipboard/-/clipboard-1.16.3.tgz#7807a90fd9984bf4d3a96faf2eee20457984a9bd"
+  integrity sha512-cMIcvoZKIrShzJHEaHbTAp458R9WOv0fB6UyC7Ek4Qk561Ow/DrzmmJmH/rAZg21Z6ixJ4YSdFDC14crqIBmCQ==
+
 "@react-native-community/cli-clean@20.1.0":
   version "20.1.0"
   resolved "https://registry.npmjs.org/@react-native-community/cli-clean/-/cli-clean-20.1.0.tgz"
@@ -6257,11 +6262,6 @@ get-tsconfig@^4.10.1:
   dependencies:
     resolve-pkg-maps "^1.0.0"
 
-gifted-charts-core@0.1.80:
-  version "0.1.80"
-  resolved "https://registry.yarnpkg.com/gifted-charts-core/-/gifted-charts-core-0.1.80.tgz#87f62c25dd55d706df93288cf26b12826cff6664"
-  integrity sha512-sAHsi25+S8xe7gReodbmtj85AKMasGRGZ2fNNr+zLo7ioB8ovSbpsmGd8cS1B0VJ+JDlgIVVyoRx39RGawVwAQ==
-
 glob-parent@^5.1.2:
   version "5.1.2"
   resolved "https://registry.npmjs.org/glob-parent/-/glob-parent-5.1.2.tgz"
@@ -8625,22 +8625,10 @@ react-native-gesture-handler@^2.27.2:
     hoist-non-react-statics "^3.3.0"
     invariant "^2.2.4"
 
-react-native-gifted-charts@^1.4.76:
-  version "1.4.76"
-  resolved "https://registry.yarnpkg.com/react-native-gifted-charts/-/react-native-gifted-charts-1.4.76.tgz#1d0b191cedd72a526b8f1dae322741a77813809a"
-  integrity sha512-GmaICcCouL7Z13KRfeVT6ngfQ2cByrVQ7TzWY8SPNUyQf+6/dZZ2+ySChNTsaFFhuwW2eTFBrDSz6HXBIzd0PA==
-  dependencies:
-    gifted-charts-core "0.1.80"
-
 react-native-is-edge-to-edge@1.2.1:
   version "1.2.1"
   resolved "https://registry.npmjs.org/react-native-is-edge-to-edge/-/react-native-is-edge-to-edge-1.2.1.tgz"
   integrity sha512-FLbPWl/MyYQWz+KwqOZsSyj2JmLKglHatd3xLZWskXOpRaio4LfEDEz8E/A6uD8QoTHW6Aobw1jbEwK7KMgR7Q==
-
-react-native-linear-gradient@^2.8.3:
-  version "2.8.3"
-  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.8.3.tgz#9a116649f86d74747304ee13db325e20b21e564f"
-  integrity sha512-KflAXZcEg54PXkLyflaSZQ3PJp4uC4whM7nT/Uot9m0e/qxFV3p6uor1983D1YOBJbJN7rrWdqIjq0T42jOJyA==
 
 react-native-mmkv@^4.1.2:
   version "4.1.2"

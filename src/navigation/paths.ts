@@ -4,4 +4,6 @@ export const enum Paths {
   Login = 'login',
   Users = 'users',
   UserDetail = 'userDetail',
+  UserWallet = 'userWallet',
+  UserInvestments = 'userInvestments',
 }

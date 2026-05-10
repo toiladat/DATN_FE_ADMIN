@@ -1903,6 +1903,28 @@ PODS:
     - React-utils (= 0.84.0)
     - ReactNativeDependencies
   - ReactNativeDependencies (0.84.0)
+  - RNCClipboard (1.16.3):
+    - hermes-engine
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-Core-prebuilt
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - ReactNativeDependencies
+    - Yoga
   - RNCMaskedView (0.3.2):
     - hermes-engine
     - RCTRequired
@@ -2263,6 +2285,7 @@ DEPENDENCIES:
   - ReactCodegen (from `build/generated/ios/ReactCodegen`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeDependencies (from `../node_modules/react-native/third-party-podspecs/ReactNativeDependencies.podspec`)
+  - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -2427,6 +2450,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   ReactNativeDependencies:
     :podspec: "../node_modules/react-native/third-party-podspecs/ReactNativeDependencies.podspec"
+  RNCClipboard:
+    :path: "../node_modules/@react-native-clipboard/clipboard"
   RNCMaskedView:
     :path: "../node_modules/@react-native-masked-view/masked-view"
   RNGestureHandler:
@@ -2519,6 +2544,7 @@ SPEC CHECKSUMS:
   ReactCodegen: c5e5343f6691b0cd76913b9be5e89e5a83ff3315
   ReactCommon: 92b53b0bd7f7d86154dc9f512c1ea5dee717cc72
   ReactNativeDependencies: eb7b2c95d50db3d0ac5c8b6c613814a15a45bdb9
+  RNCClipboard: 88d7eeb555d1183915f0885bdbc5c97eb6f7f3ba
   RNCMaskedView: d2578d41c59b936db122b2798ba37e4722d21035
   RNGestureHandler: 07de6f059e0ee5744ae9a56feb07ee345338cc31
   RNReanimated: 66fa99647173f254f731e6aa59a0a2cc8c838ac1

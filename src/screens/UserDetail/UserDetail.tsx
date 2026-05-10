@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, ScrollView, TouchableOpacity, Animated, Clipboard, Linking, Alert } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { YStack, XStack, Text, Button, Theme, Card, Spinner, Avatar, AlertDialog } from 'tamagui';
+import { YStack, XStack, Text, Button, Theme, Card, Spinner, Avatar } from 'tamagui';
 import {
-  ArrowLeft, WalletMinimal, Folder,
-  Banknote, Edit2, Ban, Globe, Send, PlayCircle, Briefcase,
-  Mail, Phone, MapPin, Calendar, Copy, Wallet, Users, AtSign, Unlock
+  ArrowLeft, WalletMinimal, Ban, Globe, Send, PlayCircle, Briefcase,
+  Mail, Phone, MapPin, Calendar, Copy, Users, AtSign, Unlock,
+  Layers, ArrowDownToLine, TrendingUp, ArrowUpRight
 } from 'lucide-react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
@@ -13,7 +13,8 @@ import Svg, { Circle } from 'react-native-svg';
 import dayjs from 'dayjs';
 
 import { useUserDetail, useBanUser, useUnbanUser } from './useUserDetail';
-import type { RootScreenProps } from '@/navigation/types';
+import type { RootScreenProps, RootStackParamList } from '@/navigation/types';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { Paths } from '@/navigation/paths';
 
 // --- Contact row ---
@@ -29,22 +30,33 @@ const ContactItem = ({ icon: Icon, text, fallback }: any) => (
 );
 
 // --- Financial summary row (inside a card, no individual card per item) ---
-const SummaryRow = ({ icon: Icon, title, value }: any) => (
-  <XStack alignItems="center" justifyContent="space-between" paddingVertical={10}>
-    <XStack alignItems="center">
-      <View style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: 'rgba(106, 27, 245, 0.06)', alignItems: 'center', justifyContent: 'center' }}>
-        <Icon size={18} color="#6a1bf5" />
-      </View>
-      <Text fontSize={14} color="#717786" fontWeight="500" marginLeft={10}>{title}</Text>
+const SummaryRow = ({ icon: Icon, title, value, onPress }: any) => {
+  const content = (
+    <XStack alignItems="center" justifyContent="space-between" paddingVertical={10}>
+      <XStack alignItems="center">
+        <View style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: 'rgba(106, 27, 245, 0.06)', alignItems: 'center', justifyContent: 'center' }}>
+          <Icon size={18} color="#6a1bf5" />
+        </View>
+        <Text fontSize={14} color="#717786" fontWeight="500" marginLeft={10}>{title}</Text>
+      </XStack>
+      <Text fontSize={14} fontWeight="700" color="#1a1b1f">{value}</Text>
     </XStack>
-    <Text fontSize={14} fontWeight="700" color="#1a1b1f">{value}</Text>
-  </XStack>
-);
+  );
+
+  if (onPress) {
+    return (
+      <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
+        {content}
+      </TouchableOpacity>
+    );
+  }
+  return content;
+};
 
 
 export default function UserDetail() {
   const route = useRoute<RootScreenProps<Paths.UserDetail>['route']>();
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const insets = useSafeAreaInsets();
   const { id } = route.params;
 
@@ -93,10 +105,9 @@ export default function UserDetail() {
   const initial = user.name ? user.name.charAt(0).toUpperCase() : (user.email ? user.email.charAt(0).toUpperCase() : 'U');
 
   const formatCurrency = (amount: number) =>
-    new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+    `${amount.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} USDT`;
 
   // Donut
-  const radius = 40;
   const total = stats.projects.total || 1;
 
   const pendingPercent = stats.projects.pending / total;
@@ -355,7 +366,7 @@ export default function UserDetail() {
               </TouchableOpacity>
 
               {/* Legend — display only, count badge appears when arc is tapped */}
-              <YStack flex={1} marginLeft="$5" space="$3">
+              <YStack flex={1} marginLeft="$5" height={130} justifyContent="space-between" paddingVertical={4}>
                 {segments.map((seg) => (
                   <TouchableOpacity activeOpacity={0.7} key={seg.key} onPress={() => handleSegmentPress(seg.key)}>
                     <XStack alignItems="center" justifyContent="space-between">
@@ -378,21 +389,6 @@ export default function UserDetail() {
                         {seg.label}
                       </Text>
                     </XStack>
-
-                    {/* Count badge — only visible when this arc was tapped */}
-                    {activeSegKey === seg.key && (
-                      <View style={{
-                        backgroundColor: seg.color,
-                        borderRadius: 10,
-                        paddingHorizontal: 9,
-                        paddingVertical: 2,
-                        minWidth: 26,
-                        alignItems: 'center',
-                        marginRight: 20
-                      }}>
-                        <Text fontSize={12} fontWeight="700" color="white">{seg.value}</Text>
-                      </View>
-                    )}
                   </XStack>
                   </TouchableOpacity>
                 ))}
@@ -404,11 +400,23 @@ export default function UserDetail() {
           <Card backgroundColor="white" borderRadius={24} paddingHorizontal="$5" paddingTop="$4" paddingBottom="$2" marginBottom="$5">
             <Text fontSize={15} fontWeight="700" color="#1a1b1f" marginBottom="$1">Summary</Text>
 
-            <SummaryRow icon={Folder} title="Invested" value={`${stats.financials.totalInvestmentsCount} Projects`} />
+            <SummaryRow 
+              icon={Layers} 
+              title="Invested" 
+              value={`${stats.financials.totalInvestmentsCount} Projects`} 
+              onPress={() => navigation.navigate(Paths.UserInvestments, { id })}
+            />
             <View style={{ height: 1, backgroundColor: 'rgba(0,0,0,0.05)' }} />
-            <SummaryRow icon={Banknote} title="Received" value={formatCurrency(stats.financials.totalReceived)} />
+            <SummaryRow 
+              icon={ArrowDownToLine} 
+              title="Received" 
+              value={formatCurrency(stats.financials.totalReceived)} 
+              onPress={() => navigation.navigate(Paths.UserWallet, { id })}
+            />
             <View style={{ height: 1, backgroundColor: 'rgba(0,0,0,0.05)' }} />
-            <SummaryRow icon={Wallet} title="Total invested" value={formatCurrency(stats.financials.totalInvestedAmount)} />
+            <SummaryRow icon={TrendingUp} title="Raised amount" value={formatCurrency(stats.financials.totalRaised)} />
+            <View style={{ height: 1, backgroundColor: 'rgba(0,0,0,0.05)' }} />
+            <SummaryRow icon={ArrowUpRight} title="Total invested" value={formatCurrency(stats.financials.totalInvestedAmount)} />
           </Card>
 
           {/* ── Action Buttons ── */}

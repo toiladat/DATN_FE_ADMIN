@@ -28,6 +28,7 @@ export interface UserDetailStats {
   };
   financials: {
     totalReceived: number;
+    totalRaised: number;
     totalInvestmentsCount: number;
     totalInvestedAmount: number;
   };
@@ -53,8 +54,7 @@ export const useUserDetail = (id: string) => {
       }
     },
     enabled: !!id,
-    staleTime: 0,          // data always considered stale → refetch on every mount
-    refetchOnMount: true,  // always refetch when screen is visited
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes instead of 0
   });
 };
 
