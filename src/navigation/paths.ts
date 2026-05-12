@@ -6,4 +6,7 @@ export const enum Paths {
   UserDetail = 'userDetail',
   UserWallet = 'userWallet',
   UserInvestments = 'userInvestments',
+  UserProjects = 'userProjects',
+  AdminProjectDetail = 'adminProjectDetail',
+  PendingProjects = 'pendingProjects',
 }

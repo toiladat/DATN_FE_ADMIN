@@ -5,3 +5,6 @@ export { default as Users } from './Users/Users';
 export { default as UserDetail } from './UserDetail/UserDetail';
 export { default as UserWallet } from './UserWallet/UserWallet';
 export { default as UserInvestments } from './UserInvestments/UserInvestments';
+export { default as UserProjects } from './UserProjects/UserProjects';
+export { default as AdminProjectDetail } from './AdminProjectDetail/AdminProjectDetail';
+export { default as PendingProjects } from './PendingProjects/PendingProjects';

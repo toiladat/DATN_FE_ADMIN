@@ -72,8 +72,9 @@ export function BottomNavigation() {
         </Button>
       </View>
       
-      <Button unstyled animation="bouncy" pressStyle={{ scale: 0.9, opacity: 0.6 }} padding="$2">
-        <Rocket color="#a3a6bc" size={26} strokeWidth={2.5} />
+      <Button unstyled animation="bouncy" pressStyle={{ scale: 0.9, opacity: 0.6 }} padding="$2"
+        onPress={() => navigation.navigate(Paths.PendingProjects)}>
+        <Rocket color={route.name === Paths.PendingProjects ? '#6a1bf5' : '#a3a6bc'} size={26} strokeWidth={2.5} />
       </Button>
       
       <Button unstyled animation="bouncy" pressStyle={{ scale: 0.9, opacity: 0.6 }} padding="$2">

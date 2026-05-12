@@ -236,8 +236,8 @@ function Users() {
                   borderRadius={10}
                   pressStyle={{ backgroundColor: '#f4f3f8' }}
                   onPress={() => {
-                    console.log('Projects', user.id);
                     setOpenMenuId(null);
+                    navigation.navigate(Paths.UserProjects, { id: user.id, name: user.name || undefined });
                   }}
                 >
                   <Folder color="#717786" size={16} strokeWidth={2.5} />

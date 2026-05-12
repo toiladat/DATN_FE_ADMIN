@@ -59,7 +59,7 @@ export default function UserWallet() {
   const { stats } = userDetail;
 
   const formatUSDT = (amount: number) =>
-    `${amount.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} usdt`;
+    `${amount.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} USDT`;
 
   return (
     <Theme name="light">

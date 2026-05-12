@@ -14,4 +14,7 @@ export type RootStackParamList = {
   [Paths.UserDetail]: { id: string };
   [Paths.UserWallet]: { id: string };
   [Paths.UserInvestments]: { id: string };
+  [Paths.UserProjects]: { id: string; name?: string };
+  [Paths.AdminProjectDetail]: { projectId: string; title?: string };
+  [Paths.PendingProjects]: undefined;
 };
