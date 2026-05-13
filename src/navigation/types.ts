@@ -17,4 +17,5 @@ export type RootStackParamList = {
   [Paths.UserProjects]: { id: string; name?: string };
   [Paths.AdminProjectDetail]: { projectId: string; title?: string };
   [Paths.PendingProjects]: undefined;
+  [Paths.PendingMilestones]: undefined;
 };

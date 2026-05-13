@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { XStack, Button } from 'tamagui';
-import { Home, Users, Zap, Rocket, Settings } from 'lucide-react-native';
+import { Home, Users, Zap, Rocket, ListChecks } from 'lucide-react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from '@/navigation/types';
@@ -77,8 +77,9 @@ export function BottomNavigation() {
         <Rocket color={route.name === Paths.PendingProjects ? '#6a1bf5' : '#a3a6bc'} size={26} strokeWidth={2.5} />
       </Button>
       
-      <Button unstyled animation="bouncy" pressStyle={{ scale: 0.9, opacity: 0.6 }} padding="$2">
-        <Settings color="#a3a6bc" size={26} strokeWidth={2.5} />
+      <Button unstyled animation="bouncy" pressStyle={{ scale: 0.9, opacity: 0.6 }} padding="$2"
+        onPress={() => navigation.navigate(Paths.PendingMilestones)}>
+        <ListChecks color={route.name === Paths.PendingMilestones ? '#6a1bf5' : '#a3a6bc'} size={26} strokeWidth={2.5} />
       </Button>
     </XStack>
   );

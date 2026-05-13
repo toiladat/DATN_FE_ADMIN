@@ -9,4 +9,5 @@ export const enum Paths {
   UserProjects = 'userProjects',
   AdminProjectDetail = 'adminProjectDetail',
   PendingProjects = 'pendingProjects',
+  PendingMilestones = 'pendingMilestones',
 }

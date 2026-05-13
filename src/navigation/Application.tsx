@@ -6,7 +6,7 @@ import { Paths } from '@/navigation/paths';
 import type { RootStackParamList } from '@/navigation/types';
 import { useTheme } from '@/theme';
 
-import { Home, Startup, Login, Users, UserWallet, UserInvestments, UserProjects, AdminProjectDetail, PendingProjects } from '@/screens';
+import { Home, Startup, Login, Users, UserWallet, UserInvestments, UserProjects, AdminProjectDetail, PendingProjects, PendingMilestones } from '@/screens';
 import UserDetail from '@/screens/UserDetail/UserDetail';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -30,6 +30,7 @@ function ApplicationNavigator() {
               <Stack.Screen component={UserProjects} name={Paths.UserProjects} />
               <Stack.Screen component={AdminProjectDetail} name={Paths.AdminProjectDetail} />
               <Stack.Screen component={PendingProjects} name={Paths.PendingProjects} />
+              <Stack.Screen component={PendingMilestones} name={Paths.PendingMilestones} />
             </>
           ) : (
             <>

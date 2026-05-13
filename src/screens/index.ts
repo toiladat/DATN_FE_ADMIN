@@ -8,3 +8,4 @@ export { default as UserInvestments } from './UserInvestments/UserInvestments';
 export { default as UserProjects } from './UserProjects/UserProjects';
 export { default as AdminProjectDetail } from './AdminProjectDetail/AdminProjectDetail';
 export { default as PendingProjects } from './PendingProjects/PendingProjects';
+export { default as PendingMilestones } from './PendingMilestones/PendingMilestones';
