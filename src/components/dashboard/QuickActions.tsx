@@ -1,6 +1,6 @@
 import React from 'react';
-import { YStack, XStack, Text } from 'tamagui';
-import { Users, Rocket, BarChart3, Settings } from 'lucide-react-native';
+import { XStack, Text } from 'tamagui';
+import { Users, Rocket, Target, Settings } from 'lucide-react-native';
 import { TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -13,7 +13,7 @@ export function QuickActions() {
   const ACTIONS = [
     { id: 'users', label: 'Users', Icon: Users, color: '#6a1bf5', onPress: () => navigation.navigate(Paths.Users) },
     { id: 'projects', label: 'Projects', Icon: Rocket, color: '#6a1bf5', onPress: () => navigation.navigate(Paths.PendingProjects) },
-    { id: 'analytics', label: 'Analytics', Icon: BarChart3, color: '#6a1bf5', onPress: () => {} },
+    { id: 'milestones', label: 'Milestones', Icon: Target, color: '#6a1bf5', onPress: () => navigation.navigate(Paths.PendingMilestones) },
     { id: 'settings', label: 'Settings', Icon: Settings, color: '#6a1bf5', onPress: () => {} },
   ];
 

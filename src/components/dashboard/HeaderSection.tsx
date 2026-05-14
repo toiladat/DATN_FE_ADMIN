@@ -1,13 +1,31 @@
 import React, { useState } from 'react';
 import { View, Image, Modal, TouchableWithoutFeedback } from 'react-native';
-import { YStack, XStack, Text, Button } from 'tamagui';
-import { Bell, LogOut } from 'lucide-react-native';
+import { YStack, XStack, Text, Button, Spinner } from 'tamagui';
+import { Bell, LogOut, User } from 'lucide-react-native';
 import { useMutation } from '@tanstack/react-query';
 import { instance } from '@/services/instance';
 import { useAuth } from '@/contexts/AuthContext';
 import { authStorage } from '@/services/storage';
 
-export function HeaderSection() {
+interface HeaderSectionProps {
+  platformRevenue?: number;
+  activeUsers?: number;
+  liveProjects?: number;
+  adminProfile?: { avatar?: string | null };
+  isLoading?: boolean;
+}
+
+function formatRevenue(value: number): string {
+  return value.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 });
+}
+
+function formatCount(value: number): string {
+  if (value >= 1_000_000) return (value / 1_000_000).toFixed(1) + 'M';
+  if (value >= 1_000) return (value / 1_000).toFixed(1) + 'K';
+  return String(value);
+}
+
+export function HeaderSection({ platformRevenue, activeUsers, liveProjects, adminProfile, isLoading }: HeaderSectionProps) {
   const { logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -22,7 +40,7 @@ export function HeaderSection() {
     },
     onSettled: () => {
       setMenuOpen(false);
-      logout(); // This clears context and redirects to Login
+      logout();
     }
   });
 
@@ -45,11 +63,15 @@ export function HeaderSection() {
         
         <View>
           <Button unstyled pressStyle={{ opacity: 0.8 }} onPress={() => setMenuOpen(true)}>
-            <View style={{ width: 44, height: 44, borderRadius: 22, overflow: 'hidden', borderWidth: 2, borderColor: 'rgba(255,255,255,0.3)' }}>
-              <Image 
-                source={{ uri: 'https://i.pravatar.cc/150?img=11' }} 
-                style={{ width: '100%', height: '100%' }} 
-              />
+            <View style={{ width: 44, height: 44, borderRadius: 22, overflow: 'hidden', borderWidth: 2, borderColor: 'rgba(255,255,255,0.3)', backgroundColor: 'rgba(255,255,255,0.1)', alignItems: 'center', justifyContent: 'center' }}>
+              {adminProfile?.avatar ? (
+                <Image 
+                  source={{ uri: adminProfile.avatar }} 
+                  style={{ width: '100%', height: '100%' }} 
+                />
+              ) : (
+                <User color="white" size={20} />
+              )}
             </View>
           </Button>
 
@@ -113,15 +135,29 @@ export function HeaderSection() {
       {/* Overview Area */}
       <YStack alignItems="center">
         <Text color="rgba(255,255,255,0.8)" fontSize={14} fontWeight="500" marginBottom="$1">Platform Revenue</Text>
-        <Text color="white" fontSize={42} fontWeight="800" letterSpacing={-1}>$124,450.54</Text>
+        {isLoading ? (
+          <Spinner size="large" color="white" marginVertical="$2" />
+        ) : (
+          <Text color="white" fontSize={42} fontWeight="800" letterSpacing={-1}>
+            {formatRevenue(platformRevenue ?? 0)}
+          </Text>
+        )}
         
         <XStack space="$4" marginTop="$5">
           <YStack alignItems="center" backgroundColor="rgba(255,255,255,0.12)" paddingHorizontal="$5" paddingVertical="$3" borderRadius="$5">
-            <Text color="white" fontWeight="bold" fontSize={18}>1,250</Text>
+            {isLoading ? (
+              <Spinner size="small" color="white" />
+            ) : (
+              <Text color="white" fontWeight="bold" fontSize={18}>{formatCount(activeUsers ?? 0)}</Text>
+            )}
             <Text color="rgba(255,255,255,0.7)" fontSize={12} marginTop="$1">Active Users</Text>
           </YStack>
           <YStack alignItems="center" backgroundColor="rgba(255,255,255,0.12)" paddingHorizontal="$5" paddingVertical="$3" borderRadius="$5">
-            <Text color="white" fontWeight="bold" fontSize={18}>45</Text>
+            {isLoading ? (
+              <Spinner size="small" color="white" />
+            ) : (
+              <Text color="white" fontWeight="bold" fontSize={18}>{formatCount(liveProjects ?? 0)}</Text>
+            )}
             <Text color="rgba(255,255,255,0.7)" fontSize={12} marginTop="$1">Live Projects</Text>
           </YStack>
         </XStack>
