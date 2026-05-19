@@ -17,5 +17,5 @@ export const MILESTONE_STATUS: Record<string, { color: string; bg: string }> = {
   CANCELLED: { color: '#b91c1c', bg: 'rgba(239,68,68,0.08)' },
 };
 
-export const TABS = ['Info', 'Milestones', 'Team', 'Investors'] as const;
+export const TABS = ['Info', 'Milestones', 'Team', 'Investors', 'Attachments'] as const;
 export type Tab = typeof TABS[number];

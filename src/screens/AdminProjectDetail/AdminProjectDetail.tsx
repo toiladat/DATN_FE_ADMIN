@@ -16,6 +16,7 @@ import { InfoTab } from './tabs/InfoTab';
 import { MilestonesTab } from './tabs/MilestonesTab';
 import { TeamTab } from './tabs/TeamTab';
 import { InvestorsTab } from './tabs/InvestorsTab';
+import { AttachmentsTab } from './tabs/AttachmentsTab';
 
 // ─── Tab Bar ─────────────────────────────────────────────────────────────────
 
@@ -177,6 +178,7 @@ export default function AdminProjectDetail() {
             {activeTab === 'Milestones' && <MilestonesTab milestones={project.milestones} />}
             {activeTab === 'Team'       && <TeamTab members={project.projectMembers} copyWallet={copyWallet} />}
             {activeTab === 'Investors'  && <InvestorsTab top={project.topInvestors} recent={project.recentInvestors} />}
+            {activeTab === 'Attachments' && <AttachmentsTab attachments={project.projectAttachments} />}
 
             {/* Approve / Reject — pending only */}
             {project.status === 'pending' && (
