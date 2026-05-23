@@ -10,6 +10,7 @@ export type MilestoneUpdate = {
   video?: string;
   link?: string | null;
   isLate?: boolean;
+  createdAt?: string | number;
 };
 
 export type Milestone = {
